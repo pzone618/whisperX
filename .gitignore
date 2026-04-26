@@ -169,3 +169,27 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+# macOS
+.DS_Store
+._*
+
+# IDEs
+.vscode/
+.idea/
+
+# Project Specific
+check_m4_env.py
+audio_samples/
+outputs/
+models/
+*.wav
+*.mp3
+*.m4a
+*.srt
+*.json
+*.vtt
+*.txt
+!README.md
+!requirements.txt
+!pyproject.toml
+!whisperx/

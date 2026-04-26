@@ -87,7 +87,7 @@ uvx whisperx
 
 ### 2. Advanced Installation Options
 
-These installation methods are for developers or users with specific needs. If you're not sure, stick with the simple installation above.
+These installation methods are for developers or users with specific needs.
 
 #### Option A: Install from GitHub
 
@@ -97,21 +97,37 @@ To install directly from the GitHub repository:
 uvx git+https://github.com/m-bain/whisperX.git
 ```
 
-#### Option B: Developer Installation
+#### Option B: Developer Installation (Recommended for Mac M4 Pro)
 
-If you want to modify the code or contribute to the project:
+If you are using a **Mac M4 Pro** or other Apple Silicon machines, using `uv` is highly recommended for performance and environment isolation.
 
 ```bash
 git clone https://github.com/m-bain/whisperX.git
 cd whisperX
+
+# Performance tip: If installing on an ExFAT external drive, use this to avoid metadata errors:
+export COPYFILE_DISABLE=1
+
+# Sync environment
 uv sync --all-extras --dev
 ```
 
 > **Note**: The development version may contain experimental features and bugs. Use the stable PyPI release for production environments.
 
-You may also need to install ffmpeg, rust etc. Follow openAI instructions here https://github.com/openai/whisper#setup.
+### 3. Mac M4 Pro / Apple Silicon Optimization
 
-### Speaker Diarization
+For Mac users, WhisperX runs exceptionally well on the M-series chips. 
+
+- **Device Selection**: Use `--device cpu` for the core transcription. While `torch` supports MPS, the `ctranslate2` backend used by WhisperX is highly optimized for ARM CPUs (NEON).
+- **Compute Type**: Use `--compute_type int8` or `float16`. `int8` is typically faster on CPU and uses less memory.
+- **FFmpeg**: Ensure FFmpeg is installed via Homebrew (`brew install ffmpeg`).
+
+Example command for Mac M4 Pro:
+```bash
+./.venv/bin/whisperx path/to/audio.wav --compute_type int8 --device cpu
+```
+
+### 4. Speaker Diarization
 
 To **enable Speaker Diarization**, include your Hugging Face access token (read) that you can generate from [Here](https://huggingface.co/settings/tokens) after the `--hf_token` argument and accept the user agreement for the [speaker-diarization-community-1](https://huggingface.co/pyannote/speaker-diarization-community-1) model.
 
